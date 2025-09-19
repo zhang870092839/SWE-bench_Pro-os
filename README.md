@@ -25,7 +25,7 @@ If you're setting up on Linux, we recommend seeing the [post-installation steps]
 Run the following commands to store modal credentials:
 ```
 pip install modal
-modal setup # and follow the prompts to generate your token and secret
+modalv setup # and follow the prompts to generate your token and secret
 ```
 
 After running these steps, you should be able to see a token ID and secret in  `~/.modal.toml`:
@@ -35,6 +35,18 @@ token_id = <token id>
 token_secret = <token secret>
 active = true
 ```
+
+We store prebuilt Docker images for each instance. They can be found in this directory:
+
+https://hub.docker.com/repository/docker/jefzda/sweap-images/general
+
+The format of the images is as follows.
+
+`jefzda/sweap-images:{repo_base}.{repo_name}-{repo_base}__{repo_name}-{hash}`
+
+For example:
+
+`jefzda/sweap-images:gravitational.teleport-gravitational__teleport-82185f232ae8974258397e121b3bc2ed0c3729ed-v626ec2a48416b10a88641359a169d99e935ff03`
 
 ## 💽 Usage
 First generate patch predictions using your harness of choice.
