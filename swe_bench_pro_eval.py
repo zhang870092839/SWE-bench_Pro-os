@@ -42,6 +42,14 @@ import modal
 import pandas as pd
 from tqdm import tqdm
 
+# Credit: prabhuteja12
+def load_base_docker(iid):
+    with open(f"dockerfiles/base_dockerfile/{iid}/Dockerfile") as fp:
+        return fp.read()
+
+def instance_docker(iid):
+    with open(f"dockerfiles/instance_dockerfile/{iid}/Dockerfile") as fp:
+        return fp.read()
 
 def load_local_script(scripts_dir, instance_id, script_name):
     """Load a script file from local scripts directory."""
@@ -57,8 +65,8 @@ def create_entryscript(sample):
     before_repo_set_cmd = sample["before_repo_set_cmd"].strip().split("\n")[-1]
     selected_test_files_to_run = ",".join(eval(sample["selected_test_files_to_run"]))
     base_commit = sample["base_commit"]
-    base_dockerfile = sample["base_dockerfile"]
-    instance_dockerfile = sample["instance_dockerfile"]
+    base_dockerfile = load_base_docker(sample["instance_id"])
+    instance_dockerfile = instance_docker(sample["instance_id"])
     
     # Extract ENV commands from dockerfiles
     env_cmds = []
@@ -92,30 +100,32 @@ def create_dockerhub_tag(uid, repo_name=""):
     """
     Convert instance_id and repo name to Docker Hub compatible tag format.
     This must match the format used in the upload script.
-    
+
     Args:
         uid (str): The instance_id (e.g., "django__django-12345")
         repo_name (str): The repository name from ECR (e.g., "sweap-images/nodebb.nodebb")
-        
+
     Returns:
         str: Docker Hub compatible tag (e.g., "nodebb-nodebb-12345")
     """
-    # Extract the final part of repo name after the last '/' and clean it up
     if repo_name:
         # For "sweap-images/nodebb.nodebb" -> "nodebb.nodebb"
-        image_name = repo_name.split('/')[-1]
-        # Replace dots with hyphens and convert to lowercase
-        image_name = image_name.replace('.', '-').lower()
+        # image_name = repo_name.split("/")[-1]
+        # # Replace dots with hyphens and convert to lowercase
+        # image_name = image_name.lower()
+        repo_base, repo_name = repo_name.lower().split("/")
+        hsh = uid.replace("instance_", "").replace("-vnan", "")
+        return f"{repo_base}.{repo_name}-{hsh}"
     else:
         image_name = "default"
-    
+
     # Extract the tag part from the instance ID
     # For UIDs that start with a pattern like "django__django-", extract everything after position 9
     if "__" in uid and len(uid) > 9:
         tag_part = uid[9:]  # Skip the first 9 characters (e.g., "django__")
     else:
         tag_part = uid
-    
+
     return f"{image_name}-{tag_part}"
 
 
