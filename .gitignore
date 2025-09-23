@@ -171,3 +171,7 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Output directory - ignore contents but not the directory itself
+output/*
+!output/.gitkeep
