@@ -31,7 +31,7 @@ If you're setting up on Linux, we recommend seeing the [post-installation steps]
 Run the following commands to store modal credentials:
 ```
 pip install modal
-modalv setup # and follow the prompts to generate your token and secret
+modal setup # and follow the prompts to generate your token and secret
 ```
 
 After running these steps, you should be able to see a token ID and secret in  `~/.modal.toml`:
@@ -59,7 +59,7 @@ First generate patch predictions using your harness of choice.
 Evaluate patch predictions on SWE-bench Pro with the following command:
 
 ```bash
-python sweap_pro_eval_modal.py \
+python swe_bench_pro_eval_modal.py \
     --raw_sample_path=external_hf_v2.csv \
     --patch_path={OUTPUT}/gold_patches.json \
     --output_dir={OUTPUT}/ \
