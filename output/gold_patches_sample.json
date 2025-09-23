@@ -1,0 +1,7 @@
+[
+    {
+        "instance_id": "unique_id",
+        "patch": "git patch content",
+        "prefix": "optional_prefix"
+    }
+]

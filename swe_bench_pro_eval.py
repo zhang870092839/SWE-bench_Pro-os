@@ -8,13 +8,13 @@ This evaluation script:
 4. Calculates overall accuracy based on test pass/fail status
 
 Usage:
-python sweap_pro_eval_modal.py \
-    --raw_sample_path=data.csv \
-    --patch_path={OUTPUT}/gold_patches.json \
-    --output_dir={OUTPUT}/ \
+python swe_bench_pro_eval.py \
+    --raw_sample_path=external_hf_v2.csv \
+    --patch_path=output/gold_patches_sample.json \
+    --output_dir=output \
     --scripts_dir=run_scripts \
     --num_workers=100 \
-    --dockerhub_username=your-username
+    --dockerhub_username=YOURNAME
 
 It expects:
 - Local run scripts in run_scripts/{instance_id}/run_script.sh
