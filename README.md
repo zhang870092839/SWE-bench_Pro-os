@@ -9,7 +9,7 @@ Code and data for the following works:
 
 * Commercial (Private) Leaderboard: <a href="https://scale.com/leaderboard/swe_bench_pro_commercial">https://scale.com/leaderboard/swe_bench_pro_commercial</a>
 
-## 👋 Overview
+## Overview
 SWE-Bench Pro is a challenging benchmark evaluating LLMs/Agents on long-horizon software engineering tasks.
 Given a *codebase* and an *issue*, a language model is tasked with generating a *patch* that resolves the described problem.
 
@@ -21,7 +21,7 @@ from datasets import load_dataset
 swebench = load_dataset('ScaleAI/SWE-bench_Pro', split='test')
 ```
 
-## 🚀 Set Up
+## Setup
 SWE-bench Pro uses Docker for reproducible evaluations.
 In addition, the evaluation script requires Modal to scale the evaluation set.
 
@@ -54,7 +54,7 @@ For example:
 
 `jefzda/sweap-images:gravitational.teleport-gravitational__teleport-82185f232ae8974258397e121b3bc2ed0c3729ed-v626ec2a48416b10a88641359a169d99e935ff03`
 
-## 💽 Usage
+## Usage
 First generate patch predictions using your harness of choice.
 Evaluate patch predictions on SWE-bench Pro with the following command:
 
