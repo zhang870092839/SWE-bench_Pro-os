@@ -116,16 +116,13 @@ def create_dockerhub_tag(uid, repo_name=""):
         # # Replace dots with hyphens and convert to lowercase
         # image_name = image_name.lower()
         # element-hq/element-web
-        image_name = repo_name.split('/')[-1]
-        # Replace dots with hyphens and convert to lowercase
-        image_name = image_name.replace('.', '-').lower()
-        # repo_base, repo_names = repo_name.lower().split("/")
-        # # repo_base element-hq
-        # # repo_name element-web
-        # # uid instance_element-hq__element-web-33e8edb3d508d6eefb354819ca693b7accc695e7
-        # hsh = uid.replace("instance_", "").replace("-vnan", "")
-        # # hsh element-hq__element-web-33e8edb3d508d6eefb354819ca693b7accc695e7
-        # return f"{repo_base}.{repo_names}-{hsh}"
+        repo_base, repo_names = repo_name.lower().split("/")
+        # repo_base element-hq
+        # repo_name element-web
+        # uid instance_element-hq__element-web-33e8edb3d508d6eefb354819ca693b7accc695e7
+        hsh = uid.replace("instance_", "").replace("-vnan", "")
+        # hsh element-hq__element-web-33e8edb3d508d6eefb354819ca693b7accc695e7
+        return f"{repo_base}.{repo_names}-{hsh}"
         # element-hq.{element-}element-hq__element-web-5dfde12c1c1c0b6e48f17e3405468593e39d9492
     else:
         image_name = "default"
