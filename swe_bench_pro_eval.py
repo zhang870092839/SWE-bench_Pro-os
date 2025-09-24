@@ -390,6 +390,8 @@ def main():
                         eval_results[instance_id] = False
                     else:
                         raw_sample = raw_sample_df.loc[instance_id]
+                        print("raw_sample")
+                        print(raw_sample)
                         passed_tests = {x["name"] for x in output["tests"] if x["status"] == "PASSED"}
                         f2p = set(eval(raw_sample["FAIL_TO_PASS"]))
                         p2p = set(eval(raw_sample["PASS_TO_PASS"]))
