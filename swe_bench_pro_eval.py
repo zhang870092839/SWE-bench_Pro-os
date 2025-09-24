@@ -116,11 +116,7 @@ def create_dockerhub_tag(uid, repo_name=""):
         # # Replace dots with hyphens and convert to lowercase
         # image_name = image_name.lower()
         repo_base, repo_name = repo_name.lower().split("/")
-        print('repo_base', repo_base)
-        print('repo_name', repo_name)
-        print('uid', uid)
         hsh = uid.replace("instance_", "").replace("-vnan", "")
-        print('hsh', hsh)
         return f"{repo_base}.{repo_name}-{hsh}"
     else:
         image_name = "default"
@@ -182,6 +178,8 @@ def eval_with_modal(patch, sample, output_dir, dockerhub_username, scripts_dir, 
         app = modal.App.lookup(name="swe-bench-pro-eval", create_if_missing=True)
         
         # Use Docker Hub image instead of ECR
+        print("sample", sample)
+        print("typeof", type(sample))
         dockerhub_image_uri = get_dockerhub_image_uri(uid, dockerhub_username, sample.get("repo", ""))
         print(f"Using Docker Hub image: {dockerhub_image_uri}")
         image = modal.Image.from_registry(
