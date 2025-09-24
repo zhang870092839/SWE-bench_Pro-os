@@ -150,7 +150,7 @@ def get_dockerhub_image_uri(uid, dockerhub_username, repo_name=""):
         str: Full Docker Hub image URI
     """
     # tag = create_dockerhub_tag(uid, repo_name)
-    return f"{repo_name}"
+    return f"{dockerhub_username}/sweap-images:{repo_name}"
 
 
 def eval_with_modal(patch, sample, output_dir, dockerhub_username, scripts_dir, prefix="", redo=False, block_network=False):
