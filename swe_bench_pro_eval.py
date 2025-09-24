@@ -110,6 +110,10 @@ def create_dockerhub_tag(uid, repo_name=""):
     Returns:
         str: Docker Hub compatible tag (e.g., "nodebb-nodebb-12345")
     """
+    if "__" in uid and len(uid) > 9:
+        uid = uid[9:]  # Skip the first 9 characters (e.g., "django__")
+    else:
+        uid = uid
     if repo_name:
         # For "sweap-images/nodebb.nodebb" -> "nodebb.nodebb"
         # image_name = repo_name.split("/")[-1]
@@ -123,12 +127,9 @@ def create_dockerhub_tag(uid, repo_name=""):
 
     # Extract the tag part from the instance ID
     # For UIDs that start with a pattern like "django__django-", extract everything after position 9
-    if "__" in uid and len(uid) > 9:
-        tag_part = uid[9:]  # Skip the first 9 characters (e.g., "django__")
-    else:
-        tag_part = uid
 
-    return f"{image_name}-{tag_part}"
+
+    return f"{image_name}-{uid}"
 
 
 def get_dockerhub_image_uri(uid, dockerhub_username, repo_name=""):
