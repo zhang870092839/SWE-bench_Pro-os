@@ -318,6 +318,7 @@ def main():
     # use instance_id as index
     raw_sample_df = raw_sample_df.set_index("instance_id", drop=False)
     print(f"Raw sample size: {len(raw_sample_df)}")
+    print(type(raw_sample_df))
     print(f"Raw sample content:")
     print(str(raw_sample_df))
 
