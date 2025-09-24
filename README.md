@@ -54,6 +54,10 @@ For example:
 
 `jefzda/sweap-images:gravitational.teleport-gravitational__teleport-82185f232ae8974258397e121b3bc2ed0c3729ed-v626ec2a48416b10a88641359a169d99e935ff03`
 
+(9/23) You can also use the image_name in the HuggingFace.
+
+Note that bash runs by default in our images. e.g. when running these images, you should not manually envoke bash. See https://github.com/scaleapi/SWE-bench_Pro-os/issues/6
+
 ## Usage
 First generate patch predictions using your harness of choice.
 Evaluate patch predictions on SWE-bench Pro with the following command:
@@ -65,7 +69,12 @@ python swe_bench_pro_eval.py \
     --output_dir=output \
     --scripts_dir=run_scripts \
     --num_workers=100 \
+<<<<<<< HEAD
     --dockerhub_username=Xander23333
+=======
+    --dockerhub_username=jefzda
+>>>>>>> origin/main
 ```
 
 Replace gold_patches with your patch json, and point raw_sample_path to the SWE-Bench Pro CSV.
+Gold Patches can be compiled from the HuggingFace dataset.
