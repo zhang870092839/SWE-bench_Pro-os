@@ -117,6 +117,7 @@ def create_dockerhub_tag(uid, repo_name=""):
         # image_name = image_name.lower()
         # element-hq/element-web
         repo_base, repo_names = repo_name.lower().split("/")
+        repo_names = repo_name.split('-')[0]
         # repo_base element-hq
         # repo_name element-web
         # uid instance_element-hq__element-web-33e8edb3d508d6eefb354819ca693b7accc695e7
