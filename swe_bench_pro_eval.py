@@ -13,8 +13,9 @@ python swe_bench_pro_eval.py \
     --patch_path=output/gold_patches_sample.json \
     --output_dir=output \
     --scripts_dir=run_scripts \
-    --num_workers=100 \
-    --dockerhub_username=YOURNAME
+    --num_workers=1 \
+    --dockerhub_username=jefzda\
+    --instance_id=specific_instance_id\(optional)
 
 It expects:
 - Local run scripts in run_scripts/{instance_id}/run_script.sh
@@ -292,6 +293,9 @@ def parse_args():
     parser.add_argument(
         "--block_network", action="store_true", help="Block network access for Modal"
     )
+    parser.add_argument(
+        "--instance_id", help="Run evaluation for a specific instance ID only"
+    )
     return parser.parse_args()
 
 
@@ -315,6 +319,16 @@ def main():
         patches_to_run = json.load(f)
     eval_results = {}
 
+    # If a specific instance_id is provided, filter patches to only include that instance
+    if args.instance_id:
+        patches_to_run = [patch for patch in patches_to_run if patch["instance_id"] == args.instance_id]
+        if not patches_to_run:
+            print(f"Error: Instance ID {args.instance_id} not found in patch file")
+            return
+        if args.instance_id not in raw_sample_df.index:
+            print(f"Error: Instance ID {args.instance_id} not found in raw sample data")
+            return
+    
     # Filter patches to only include those with matching instance_ids in the raw sample data
     valid_patches = []
     missing_instances = []
