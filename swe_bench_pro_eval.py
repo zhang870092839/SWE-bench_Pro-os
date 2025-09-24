@@ -395,6 +395,7 @@ def main():
                 current_accuracy = sum(eval_results.values()) / len(eval_results)
                 pbar.set_description(f"Accuracy: {current_accuracy:.2%}")
             except Exception as exc:
+                traceback.print_exc()
                 print(f'Evaluation for {patch_sample["instance_id"]} generated an exception: {exc}')
                 eval_results[patch_sample["instance_id"]] = False
                 # Update progress bar description with current accuracy
