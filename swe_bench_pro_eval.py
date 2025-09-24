@@ -305,7 +305,7 @@ def parse_args():
 
 def main():
     args = parse_args()
-
+    modal.enable_output()
     # Support both JSONL and CSV input files
     if args.raw_sample_path.endswith(".jsonl"):
         raw_sample_df = pd.read_json(args.raw_sample_path, lines=True)
