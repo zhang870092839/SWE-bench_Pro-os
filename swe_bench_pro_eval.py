@@ -116,7 +116,11 @@ def create_dockerhub_tag(uid, repo_name=""):
         # # Replace dots with hyphens and convert to lowercase
         # image_name = image_name.lower()
         repo_base, repo_name = repo_name.lower().split("/")
+        print('repo_base', repo_base)
+        print('repo_name', repo_name)
+        print('uid', uid)
         hsh = uid.replace("instance_", "").replace("-vnan", "")
+        print('hsh', hsh)
         return f"{repo_base}.{repo_name}-{hsh}"
     else:
         image_name = "default"
