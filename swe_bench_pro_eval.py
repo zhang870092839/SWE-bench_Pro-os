@@ -317,10 +317,6 @@ def main():
     
     # use instance_id as index
     raw_sample_df = raw_sample_df.set_index("instance_id", drop=False)
-    print(f"Raw sample size: {len(raw_sample_df)}")
-    print(type(raw_sample_df))
-    print(f"Raw sample content:")
-    print(str(raw_sample_df))
 
     # each patch sample is a dict with keys: instance_id, patch, prefix
     with open(args.patch_path, "r") as f:
@@ -390,8 +386,6 @@ def main():
                         eval_results[instance_id] = False
                     else:
                         raw_sample = raw_sample_df.loc[instance_id]
-                        print("raw_sample")
-                        print(raw_sample)
                         passed_tests = {x["name"] for x in output["tests"] if x["status"] == "PASSED"}
                         f2p = set(eval(raw_sample["fail_to_pass"]))
                         p2p = set(eval(raw_sample["pass_to_pass"]))
