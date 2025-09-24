@@ -150,6 +150,8 @@ def get_dockerhub_image_uri(uid, dockerhub_username, repo_name=""):
         str: Full Docker Hub image URI
     """
     # tag = create_dockerhub_tag(uid, repo_name)
+    print(f"Generating Docker Hub image URI for {uid}")
+    print(f"{dockerhub_username}/sweap-images:{repo_name}")
     return f"{dockerhub_username}/sweap-images:{repo_name}"
 
 
