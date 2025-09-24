@@ -38,6 +38,7 @@ import argparse
 import concurrent.futures
 import json
 import os
+import traceback
 
 import modal
 import pandas as pd
@@ -179,7 +180,6 @@ def eval_with_modal(patch, sample, output_dir, dockerhub_username, scripts_dir, 
         # Use Docker Hub image instead of ECR
         dockerhub_image_uri = get_dockerhub_image_uri(uid, dockerhub_username, sample.get("repo", ""))
         print(f"Using Docker Hub image: {dockerhub_image_uri}")
-        
         image = modal.Image.from_registry(
             dockerhub_image_uri,
             setup_dockerfile_commands=[
@@ -197,14 +197,14 @@ def eval_with_modal(patch, sample, output_dir, dockerhub_username, scripts_dir, 
             memory=(5 * 1024, 30 * 1024),
             block_network=block_network,
         )
-        
+
         process = sandbox.exec("mkdir", "-p", "/workspace")
         process.wait()
-        
+
         # Write patch file
         with sandbox.open("/workspace/patch.diff", "w") as f:
             f.write(patch)
-            
+
         # Write local scripts to sandbox
         with sandbox.open("/workspace/run_script.sh", "w") as f:
             f.write(run_script)
@@ -212,10 +212,10 @@ def eval_with_modal(patch, sample, output_dir, dockerhub_username, scripts_dir, 
             f.write(parser_script)
         with sandbox.open("/workspace/entryscript.sh", "w") as f:
             f.write(create_entryscript(sample))
-            
+
         process = sandbox.exec("bash", "/workspace/entryscript.sh")
         process.wait()
-        
+
         # Check if the process was successful
         if process.returncode != 0:
             print(f"Entryscript failed for {uid} with return code: {process.returncode}")
@@ -229,7 +229,7 @@ def eval_with_modal(patch, sample, output_dir, dockerhub_username, scripts_dir, 
                         print(error_details[:1000])  # Print first 1000 chars
             except Exception as e:
                 print(f"Failed to read stderr for {uid}: {e}")
-            
+
         # Check if output.json exists first
         try:
             with sandbox.open("/workspace/output.json", "r") as f_in:
@@ -241,7 +241,7 @@ def eval_with_modal(patch, sample, output_dir, dockerhub_username, scripts_dir, 
                 f"Warning: output.json not found for {uid}. Check {prefix}_stdout.log and {prefix}_stderr.log for details"
             )
             return None
-            
+
         # Save logs
         with sandbox.open("/workspace/stdout.log", "r") as f_in:
             with open(os.path.join(output_dir, uid, f"{prefix}_stdout.log"), "w") as f:
@@ -254,9 +254,10 @@ def eval_with_modal(patch, sample, output_dir, dockerhub_username, scripts_dir, 
         with open(os.path.join(output_dir, uid, f"{prefix}_entryscript.sh"), "w") as f:
             entryscript_content = create_entryscript(sample)
             f.write(entryscript_content if entryscript_content is not None else "")
-            
+
         return output
     except Exception as e:
+        traceback.print_exc()
         print(f"Error in eval_with_modal for {uid}: {repr(e)}")
         print(f"Error type: {type(e)}")
         return None
