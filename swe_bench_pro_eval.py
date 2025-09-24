@@ -15,7 +15,7 @@ python swe_bench_pro_eval.py \
     --scripts_dir=run_scripts \
     --num_workers=1 \
     --dockerhub_username=jefzda\
-    --instance_id=specific_instance_id\(optional)
+    --instance_id=specific_instance_id
 
 It expects:
 - Local run scripts in run_scripts/{instance_id}/run_script.sh
