@@ -318,7 +318,8 @@ def main():
     # use instance_id as index
     raw_sample_df = raw_sample_df.set_index("instance_id", drop=False)
     print(f"Raw sample size: {len(raw_sample_df)}")
-    print(f"Raw sample count: {str(raw_sample_df)}")
+    print(f"Raw sample content:")
+    print(str(raw_sample_df))
 
     # each patch sample is a dict with keys: instance_id, patch, prefix
     with open(args.patch_path, "r") as f:
