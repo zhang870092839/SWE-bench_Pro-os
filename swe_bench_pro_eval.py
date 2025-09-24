@@ -149,10 +149,8 @@ def get_dockerhub_image_uri(uid, dockerhub_username, repo_name=""):
     Returns:
         str: Full Docker Hub image URI
     """
-    # tag = create_dockerhub_tag(uid, repo_name)
-    print(f"Generating Docker Hub image URI for {uid}")
-    print(f"{dockerhub_username}/sweap-images:{repo_name}")
-    return f"{dockerhub_username}/sweap-images:{repo_name}"
+    tag = create_dockerhub_tag(uid, repo_name)
+    return f"{dockerhub_username}/sweap-images:{tag}"
 
 
 def eval_with_modal(patch, sample, output_dir, dockerhub_username, scripts_dir, prefix="", redo=False, block_network=False):
@@ -186,7 +184,7 @@ def eval_with_modal(patch, sample, output_dir, dockerhub_username, scripts_dir, 
         app = modal.App.lookup(name="swe-bench-pro-eval", create_if_missing=True)
         
         # Use Docker Hub image instead of ECR
-        dockerhub_image_uri = get_dockerhub_image_uri(uid, dockerhub_username, sample["image_name"])
+        dockerhub_image_uri = get_dockerhub_image_uri(uid, dockerhub_username, sample.get("repo", ""))
         print(f"Using Docker Hub image: {dockerhub_image_uri}")
         image = modal.Image.from_registry(
             dockerhub_image_uri,
@@ -197,6 +195,7 @@ def eval_with_modal(patch, sample, output_dir, dockerhub_username, scripts_dir, 
             ],
         )
 
+        print(f"image created: {image}")
 
         sandbox = modal.Sandbox.create(
             image=image,
