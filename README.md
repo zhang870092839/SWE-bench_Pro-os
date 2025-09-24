@@ -69,11 +69,7 @@ python swe_bench_pro_eval.py \
     --output_dir=output \
     --scripts_dir=run_scripts \
     --num_workers=100 \
-<<<<<<< HEAD
-    --dockerhub_username=Xander23333
-=======
     --dockerhub_username=jefzda
->>>>>>> origin/main
 ```
 
 Replace gold_patches with your patch json, and point raw_sample_path to the SWE-Bench Pro CSV.
