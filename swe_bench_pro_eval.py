@@ -188,6 +188,7 @@ def eval_with_modal(patch, sample, output_dir, dockerhub_username, scripts_dir, 
                 "RUN pip install requests || true",
             ],
         ).entrypoint([])
+        print(f"image created: {image}")
 
         sandbox = modal.Sandbox.create(
             image=image,
@@ -197,6 +198,7 @@ def eval_with_modal(patch, sample, output_dir, dockerhub_username, scripts_dir, 
             memory=(5 * 1024, 30 * 1024),
             block_network=block_network,
         )
+        print('sandbox:', sandbox)
 
         process = sandbox.exec("mkdir", "-p", "/workspace")
         process.wait()
