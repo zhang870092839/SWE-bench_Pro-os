@@ -187,7 +187,8 @@ def eval_with_modal(patch, sample, output_dir, dockerhub_username, scripts_dir, 
                 "RUN python -m pip config set global.break-system-packages true || true",
                 "RUN pip install requests || true",
             ],
-        ).entrypoint([])
+        )
+
         print(f"image created: {image}")
 
         sandbox = modal.Sandbox.create(
